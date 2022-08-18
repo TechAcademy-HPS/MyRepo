@@ -12,11 +12,11 @@ pipeline {
     }
 	
     stages {
-        stage('checkout') {
+        /*stage('checkout') {
             steps {
                 git credentialsId: 'githubcredentials', url: 'https://github.com/TechAcademy-HPS/MyRepo.git'
             }
-        }
+        }*/
 		
          stage('Build'){
              steps{
