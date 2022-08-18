@@ -14,13 +14,13 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                git credentialsId: 'githubcredentials', url: 'https://github.com/TechAcademy-HPS/maven-web-application-1.git'
+                git credentialsId: 'githubcredentials', url: 'https://github.com/TechAcademy-HPS/MyRepo.git'
             }
         }
 		
          stage('Build'){
              steps{
-	            sh "mvn clean package"
+	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
 		
