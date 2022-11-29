@@ -22,7 +22,7 @@ pipeline {
 	stage('Building image') {
             steps{
                 script {
-			  sh "docker build -t yoshithadocker/mydockerrepo:${buildno} ." 
+			  sh "docker build -t yoshithadocker/mydockerrepo:latest ." 
                      }
                   }
               }
@@ -33,7 +33,7 @@ pipeline {
 			  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
                                         
 					sh 'docker login -u yoshithadocker -p ${dockerpassword}'
-			                sh "docker push yoshithadocker/mydockerrepo:${buildno}"
+			                sh "docker push yoshithadocker/mydockerrepo:latest"
                      }
                   }
               }
