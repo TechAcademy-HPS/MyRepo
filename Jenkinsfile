@@ -76,10 +76,14 @@ pipeline {
 	    stage('Building image') {
             steps{
                 script {
-                    sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
+			 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/') {
+                                 sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
+				 sh 'docker push yoshithadocker/mydockerrepo:latest'
+                          }
                   }
               }
           }
+	 
          stage('K8S Deploy') {
              steps{   
               script {
