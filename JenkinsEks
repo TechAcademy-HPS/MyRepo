@@ -20,7 +20,7 @@ pipeline {
 	              }
         }  
 	
-	/*stage('Building image') {
+	stage('Building image') {
             steps{
                 script {
 			  sh "docker build -t yoshithadocker/mydockerrepo:latest ." 
@@ -40,30 +40,16 @@ pipeline {
               }
           }
 	 
-	
-	   /* stage('Building image') {
-            steps{
-                script {
-			                   withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/') {
-                                           sh "docker build -t yoshithadocker/mydockerrepo:${buildno} ." 
-			                   sh 'docker push yoshithadocker/mydockerrepo:latest'
-                          }
-                  }
-              }
-          }*/
-	 
          stage('K8S Deploy') {
              steps{   
               script {
-                 /* withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
-                    sh ('kubectl apply -f  eks-deploy-k8s.yaml')
-                 }*/
+                 
 		      kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://394B0D2B64F459D83B8A7C980116DC28.gr7.us-east-2.eks.amazonaws.com') {
                                  sh ('kubectl apply -f  eks-deploy-k8s.yaml')
                              }
              }
             }
-        }*/
+        }
 
      }
 
