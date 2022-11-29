@@ -23,29 +23,37 @@ pipeline {
 	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
-	/*stage('Building image') {
+	stage('Building image') {
+            steps{
+                script {
+			  sh "docker build -t yoshithadocker/mydockerrepo:${buildno} ." 
+                     }
+                  }
+              }
+          }
+	stage('push to repo') {
             steps{
                 script {
 			  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
-                                        sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
-					docker login -u yoshithadocker -p dockerpassword
+                                        
+					sh 'docker login -u yoshithadocker -p ${dockerpassword}'
 			                sh 'docker push yoshithadocker/mydockerrepo:latest'
                      }
                   }
               }
-          }*/
+          }
 	 
 	
-	    stage('Building image') {
+	   /* stage('Building image') {
             steps{
                 script {
 			                   withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/') {
-                                           sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
+                                           sh "docker build -t yoshithadocker/mydockerrepo:${buildno} ." 
 			                   sh 'docker push yoshithadocker/mydockerrepo:latest'
                           }
                   }
               }
-          }
+          }*/
 	 
          stage('K8S Deploy') {
              steps{   
