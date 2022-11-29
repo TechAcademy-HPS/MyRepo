@@ -23,7 +23,7 @@ pipeline {
 	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
-	stage('Building image') {
+	/*stage('Building image') {
             steps{
                 script {
 			  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
@@ -33,10 +33,10 @@ pipeline {
                      }
                   }
               }
-          }
+          }*/
 	 
 	
-	   /* stage('Building image') {
+	    stage('Building image') {
             steps{
                 script {
 			                   withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/') {
@@ -45,7 +45,7 @@ pipeline {
                           }
                   }
               }
-          }*/
+          }
 	 
          stage('K8S Deploy') {
              steps{   
