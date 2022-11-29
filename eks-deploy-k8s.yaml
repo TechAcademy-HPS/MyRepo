@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: my-springboot-app
-        image: yoshithadocker/mavenwebapplication:latest
+        image: yoshithadocker/ltiproject:58
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
