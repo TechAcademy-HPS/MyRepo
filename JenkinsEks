@@ -12,17 +12,13 @@ pipeline {
     }
 	
     stages {
-      /* stage('checkout') {
-            steps {
-                git credentialsId: 'githubcredentials', url: 'https://github.com/TechAcademy-HPS/MyRepo.git'
-            }
-        }*/
-		
+      	
          stage('Build'){
              steps{
 	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
+	
 	stage('Building image') {
             steps{
                 script {
@@ -30,7 +26,7 @@ pipeline {
                      }
                   }
               }
-          }
+	      
 	stage('push to repo') {
             steps{
                 script {
