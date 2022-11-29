@@ -15,11 +15,12 @@ pipeline {
       	
          stage('Build'){
              steps{
-	            sh "cd mavenapp;mvn clean package"
+	            sh "cd mavenapp"
+		    sh "mvn clean package"
 	              }
         }  
 	
-	stage('Building image') {
+	/*stage('Building image') {
             steps{
                 script {
 			  sh "docker build -t yoshithadocker/mydockerrepo:latest ." 
@@ -62,7 +63,7 @@ pipeline {
                              }
              }
             }
-        }
+        }*/
 
      }
 
