@@ -72,8 +72,14 @@ pipeline {
                 sh 'docker push 332303016470.dkr.ecr.ap-south-1.amazonaws.com/mydockerrepo:latest'
                 }
             }
-         }*/			 
-  
+         }*/	
+	    stage('Building image') {
+            steps{
+                script {
+                    sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
+                  }
+              }
+          }
          stage('K8S Deploy') {
              steps{   
               script {
