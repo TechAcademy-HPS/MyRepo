@@ -23,57 +23,20 @@ pipeline {
 	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
-	 /*stage('sonar') {
-            steps {
-		    script {
-                withSonarQubeEnv('SonarQube') {
-                sh "cd mavenapp;mvn sonar:sonar"
-                }
-               timeout(time: 20, unit: 'SECONDS') {
-                      def qg = waitForQualityGate()
-                      if (qg.status != 'OK') {
-                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                      }
-                    }
-                 }
-	      }
-           }
-	stage('upload to nexus') {
-            steps {
-                nexusArtifactUploader artifacts: [
-				[
-				artifactId: 'maven-web-application',
-				classifier: '',
-				file: 'target/maven-web-application.war',
-				type: 'war'
-				]
-				],
-				credentialsId: 'nexuscredentials',
-				groupId: 'com.mt',
-				nexusUrl: '13.233.0.247:8081',
-				nexusVersion: 'nexus3',
-				protocol: 'http',
-				repository: 'mavenapp',
-				version: '0.0.1'
-            }
-        }
-        stage('Building image') {
+	stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build registry 
-                }
-            }
-        }
-		     
-        stage('Pushing to ECR') {
-             steps{  
-                 script {
-                sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 332303016470.dkr.ecr.ap-south-1.amazonaws.com'
-                sh 'docker push 332303016470.dkr.ecr.ap-south-1.amazonaws.com/mydockerrepo:latest'
-                }
-            }
-         }*/	
-	    stage('Building image') {
+			  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
+                                        sh "docker build -t yoshithadocker/ltiproject:${buildno} ." 
+					docker login -u yoshithadocker -p dockerpassword
+			                sh 'docker push yoshithadocker/mydockerrepo:latest'
+                     }
+                  }
+              }
+          }
+	 
+	
+	   /* stage('Building image') {
             steps{
                 script {
 			                   withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/') {
@@ -82,7 +45,7 @@ pipeline {
                           }
                   }
               }
-          }
+          }*/
 	 
          stage('K8S Deploy') {
              steps{   
