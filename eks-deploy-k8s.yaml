@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: my-springboot-app
-        image: yoshithadocker/tomcatimage:latest
+        image: yoshithadocker/mydockerrepo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
