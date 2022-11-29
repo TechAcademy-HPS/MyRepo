@@ -1,7 +1,7 @@
 def buildno = BUILD_NUMBER
 pipeline {
     agent any
-   /* tools {
+    tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "maven3.6.3"
     }
@@ -9,21 +9,21 @@ pipeline {
 	
 	environment {
         registry = "332303016470.dkr.ecr.ap-south-1.amazonaws.com/mydockerrepo"
-    }*/
+    }
 	
     stages {
-        /*stage('checkout') {
+      /* stage('checkout') {
             steps {
                 git credentialsId: 'githubcredentials', url: 'https://github.com/TechAcademy-HPS/MyRepo.git'
             }
-        }
+        }*/
 		
          stage('Build'){
              steps{
 	            sh "cd mavenapp;mvn clean package"
 	              }
         }  
-	stage('sonar') {
+	 /*stage('sonar') {
             steps {
 		    script {
                 withSonarQubeEnv('SonarQube') {
