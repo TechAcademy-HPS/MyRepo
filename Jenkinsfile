@@ -77,9 +77,12 @@ pipeline {
          stage('K8S Deploy') {
              steps{   
               script {
-                 // withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
+                 /* withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
                     sh ('kubectl apply -f  eks-deploy-k8s.yaml')
-                // }
+                 }*/
+		      kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://394B0D2B64F459D83B8A7C980116DC28.gr7.us-east-2.eks.amazonaws.com') {
+                                 sh ('kubectl apply -f  eks-deploy-k8s.yaml')
+                             }
              }
             }
         }
