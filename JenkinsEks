@@ -8,7 +8,7 @@ pipeline {
     
 	
 	environment {
-        registry = "332303016470.dkr.ecr.ap-south-1.amazonaws.com/mydockerrepo"
+        registry = "332303016470.dkr.ecr.ap-south-1.amazonaws.com/mydockerrepo:${buildno}"
     }
 	
     stages {
@@ -23,7 +23,7 @@ pipeline {
 	stage('Building image') {
             steps{
                 script {
-			  sh "docker build -t yoshithadocker/mydockerrepo:latest ." 
+			  sh "docker build -t yoshithadocker/mydockerrepo:${buildno} ." 
                      }
                   }
               }
